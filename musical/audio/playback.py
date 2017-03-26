@@ -83,8 +83,8 @@ def play(data, rate=44100):
   '''
   if pygame_supported():
     return pygame_play(data)
-  elif oss_supported():
-    return oss_play(data)
+  #elif oss_supported():
+  #  return oss_play(data)
   elif pyaudio_supported():
     return pyaudio_play(data)
   else:
