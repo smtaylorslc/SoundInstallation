@@ -1,5 +1,5 @@
 # jacksonSoundInstallation
-Installation art piece -- written in Python.
+Installation art piece written in Python.
 Creates multiple sine waves and then adjusts them given input from a PIR sensor (the more consecutive motion detected, the more dissonant the sine waves become).
 
 Currently this project works well as a standalone project, but the Pi's audio output is less than satisfactory -- planning to create a socket connection between the Pi and a client computer that will output the sound to a stereo system.
