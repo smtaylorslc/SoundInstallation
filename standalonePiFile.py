@@ -23,19 +23,19 @@ class sinePlayer(Thread):
     self.data = self.data * 0.5
   
   # Adjust audio by x steps in scale defined above
-  def adjustAudio(self,adjustment):
-    self.note = self.scale.transpose(self.key, 0)
+  def adjustAudio(self,adjustment,loudness):
+    self.note = self.scale.transpose(self.key, adjustment)
     self.chunks = []
     self.chunks.append(source.sawtooth(self.note, .5))
     self.data_adjusted = numpy.concatenate(self.chunks)
-    self.data_adjusted = self.data_adjusted * 0.5
+    self.data_adjusted = self.data_adjusted * 0.5 * loudness
     self.data = self.data_adjusted
 
   # Runs indefinitely until passed "stop" trigger
   def run(self):
     while not self.stopped.wait(0.001):
       playback.play(self.data)
-
+      #print self.data
 
 # Detects motion from PIR sensor. Sends motion info to
 # sinePlayers.
@@ -46,24 +46,33 @@ class motionDetectController(Thread):
     self.num_players = int(numPlayers)
     for i in range(self.num_players):
       self.players[i] = sinePlayer(stopFlag)
+      self.players[i].start()
     self.stopped = event
     self.motion_counter = 0
-     self.pir = MotionSensor(4)
+    self.pir = MotionSensor(4)
   def run(self):
+    #print("Motion: " + str(self.motion_counter))
     while not self.stopped.wait(0.001):
-      if pir.motion_detected:
-        if self.motion_counter <= self.num_players:
+      #print("Motion: " + str(self.motion_counter))
+      if self.pir.motion_detected:
+        print(self.num_players)
+        print("Num players")
+        if self.motion_counter <= self.num_players - 1:
           self.motion_counter += 1
           self.players[
-            self.motion_counter
-          ].adjustAudio(self.motion_counter)
+            self.motion_counter - 1
+          ].adjustAudio(self.motion_counter,self.motion_counter)
+          print("Motion Level: " + str(self.motion_counter))
+          time.sleep(1)
       else:
         if self.motion_counter > 0:
           self.players[
-            self.motion_counter
-          ].adjustAudio(0)
+            self.motion_counter - 1
+          ].adjustAudio(0,1)
           self.motion_counter -= 1
-      None
+          print("Motion Level: " + str(self.motion_counter))
+          time.sleep(1)
+      #None
       
 
 
@@ -71,7 +80,7 @@ stopFlag = Event()
 startApp = raw_input("How many threads?  ")
 
 x = motionDetectController(stopFlag,startApp)
-
+x.start()
 stopApp = raw_input("Press enter to quit.")
 # Exit app.
 stopFlag.set()
