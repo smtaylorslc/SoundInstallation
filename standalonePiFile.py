@@ -43,12 +43,12 @@ class motionDetectController(Thread):
   def __init__(self, event, numPlayers):
     Thread.__init__(self)
     self.players = {}
-    self.num_players = numPlayers
+    self.num_players = int(numPlayers)
     for i in range(self.num_players):
       self.players[i] = sinePlayer(stopFlag)
     self.stopped = event
     self.motion_counter = 0
-    self.pir = MotionSensor(4)
+     self.pir = MotionSensor(4)
   def run(self):
     while not self.stopped.wait(0.001):
       if pir.motion_detected:
@@ -63,11 +63,15 @@ class motionDetectController(Thread):
             self.motion_counter
           ].adjustAudio(0)
           self.motion_counter -= 1
-      if self.motion_counter >= 1
+      None
       
 
 
 stopFlag = Event()
-stopFlag.set()
+startApp = raw_input("How many threads?  ")
 
-x = motionDetectController(stopFlag,7)
+x = motionDetectController(stopFlag,startApp)
+
+stopApp = raw_input("Press enter to quit.")
+# Exit app.
+stopFlag.set()
