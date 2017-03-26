@@ -3,9 +3,9 @@ Installation art piece -- written in Python.
 
 ## Setup
 **Prereqs:**
-*Python 2.7
-*Pip
-*Virtualenv
+* Python 2.7
+* Pip
+* Virtualenv
 
 If you don't already have virtualenv installed, run `pip install virtualenv` from the command line.
 
