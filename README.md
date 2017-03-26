@@ -11,9 +11,12 @@ If you don't already have virtualenv installed, run `pip install virtualenv` fro
 
 Start a virtualenvironment inside the project folder and install the requirements listed in requirements.txt.
 
-`virtualenv venv`
-`source venv/bin/activate`
-`pip install -r requirements.txt`
+`virtualenv venv` 
+
+`source venv/bin/activate` 
+
+`pip install -r requirements.txt` 
+
 
 After this, you should be ready to run the attached standalonePiFile.py from the command line using:
 
