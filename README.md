@@ -1,4 +1,4 @@
-# jacksonSoundInstallation
+# SoundInstallation
 Installation art piece written in Python.
 Creates multiple sine waves and then adjusts them given input from a PIR sensor (the more consecutive motion detected, the more dissonant the sine waves become).
 
